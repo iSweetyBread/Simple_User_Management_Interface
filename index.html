@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loading...</title>
+    <link rel="icon" type="image/x-icon" href="./static/img/logo.ico">
+    <script src="./static/lib/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <script type="module">
+        import { apiReq, getCookie } from "./static/js/api.js";
+
+        //set initial theme
+        document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+        //checks current user's authentication status and sends to the appropriate page 
+        async function checkAuthStatus() {
+            try{
+                const user = getCookie("user");
+                const token = getCookie("token");
+
+                if (!user || !token) throw new Error("Missing user or token cookie");
+
+                const response = await apiReq({'q':'user','c':'get','user':user,'token':token});
+                //console.log(response);
+
+                if(response.root){
+                    window.location.replace("./admin.html");
+                }else{
+                    window.location.replace("./user.html");
+                }
+            }catch(error){
+                window.location.replace("./login.html");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", async() =>{
+            await checkAuthStatus();
+        });
+    </script>
+</body>
+</html>

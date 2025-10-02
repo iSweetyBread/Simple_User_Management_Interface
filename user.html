@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User View</title>
+    <link rel="icon" type="image/x-icon" href="./static/img/logo.ico">
+
+    <link href="./static/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/lib/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="./static/lib/datatables.min.css" rel="stylesheet">
+
+    <script src="./static/lib/bootstrap.bundle.min.js"></script>
+    <script src="./static/lib/jquery-3.7.1.min.js"></script>
+
+    <script type="module" src="./static/js/user.js?ts=1756729503"></script>
+
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+    <nav class="sticky-top">
+        <ul class="nav nav-tabs align-items-center">
+            <li class="nav-item">
+                <span class="nav-link disabled">
+                    <img src="./static/img/logo.ico" alt="Logo" height="19">
+                </span>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link active" id="mainViewLink">User Info</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="settingsViewLink">Edit User Info</a>
+            </li>
+
+            <li class="nav-item ms-auto">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">Theme</button>
+                <ul class="dropdown-menu" aria-labelledby="themeDropdown">
+                    <li><a class="dropdown-item" href="#" data-theme="light">Light</a></li>
+                    <li><a class="dropdown-item" href="#" data-theme="dark">Dark</a></li>
+                    <li><a class="dropdown-item" href="#" data-theme="auto">Auto</a></li>
+                </ul>
+                <button class="btn btn-outline-secondary" style="margin-right: 1rem;">Help</button>
+                <button class="btn btn-outline-danger" style="margin-right: 1rem;" id="btnLogout">Logout</button>
+            </li>
+        </ul>
+    </nav>
+    <div>
+        <div class="active show" id="mainViewPage">
+
+            <div id="infoLoader" class="loader2" style="display: none;"></div>
+            <div class="d-flex justify-content-center align-items-center mt-5" style="height: 30rem;">
+                <div class="card" style="width: 24rem; transform: scale(1.2); transform-origin: top center">
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Account Information</h5>
+                        <p class="card-text">Here are the details of your account.</p>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Login:</strong> <span id="currentUserLogin"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Email:</strong> <span id="currentUserEmail"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Role:</strong> <span id="currentUserRole"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Authority:</strong> <span id="currentUserRole">user</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-none d-flex justify-content-center align-items-start gap-4 mt-5" id="settingsViewPage">
+            
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <div class="card" style="width: 24rem;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Update Email</h5>
+                        <div class="form-floating mb-3">
+                            <input id="inputEmailEmail" type="email" class="form-control" placeholder="new@example.com">
+                            <label for="inputEmailEmail">New Email</label>
+                        </div>
+                        <p class="text-danger small mt-1 d-none userNotif" id="errorEmailEmail"></p>
+                        <p class="text-success small mt-1 d-none userNotif" id="successEmailMessage"></p>
+
+                        <div class="d-grid">
+                            <button id="btnChangeEmail" class="btn btn-primary disabled" type="submit">Update Email</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <div class="card" style="width: 24rem;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Update Password</h5>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input id="inputCurrentPassword" type="password" class="form-control toggle-password-input pe-5" placeholder="Old Password" autocomplete="new-password">
+                            <label>Old Password</label>
+                            <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 py-1 px-2 border-0 toggle-password-btn" tabindex="-1">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
+                        <p class="text-danger small mt-1 d-none userNotif" id="errorCurrentPassword"></p>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input id="inputNewPassword" type="password" class="form-control toggle-password-input pe-5" placeholder="New Password" autocomplete="new-password">
+                            <label>New Password</label>
+                            <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 py-1 px-2 border-0 toggle-password-btn" tabindex="-1">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
+                        <p class="text-danger small mt-1 d-none userNotif" id="errorNewPassword"></p>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input id="inputNewPasswordRepeat" type="password" class="form-control toggle-password-input pe-5" placeholder="Repeat New Password" autocomplete="new-password">
+                            <label>Repeat New Password</label>
+                            <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2 py-1 px-2 border-0 toggle-password-btn" tabindex="-1">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
+                        <p class="text-danger small mt-1 d-none userNotif" id="errorRepeatPassword"></p>
+                        <p class="text-success small mt-1 d-none userNotif" id="successPassMessage"></p>
+
+                        <div class="d-grid">
+                            <button id="btnChangePassword" class="btn btn-primary disabled" type="submit">Update Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sessionExpiredModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Session Expired</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Your session has expired. Please log in again to continue.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnGoLogin" class="btn btn-danger">Go to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
