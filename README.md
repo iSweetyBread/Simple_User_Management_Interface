@@ -44,7 +44,7 @@ To run the project locally, simply clone the repository and open `index.html` in
 ---
 
 ## License
-Distributed under the MIT License. See LICENSE for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
